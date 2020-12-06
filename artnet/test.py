@@ -1,7 +1,7 @@
 from pyartnet import ArtNetNode
 import asyncio
 import time
-node = ArtNetNode('2.0.0.2')
+node = ArtNetNode('2.0.0.255')
 async def functie():
     await node.start()
 
