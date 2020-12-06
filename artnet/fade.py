@@ -6,7 +6,7 @@ node = ArtNetNode('2.0.0.2')
 async def functie():
     await node.start()
 
-    universe = node.add_universe(0)
+    universe = node.add_universe(3)
     multiverse = node.add_universe(1)
     # dit zou een range van channels kunnen requesten
     # channel = universe.get_channel('1/3')  
@@ -40,10 +40,10 @@ async def functie():
     channel2.add_fade([ha,255,bla,43,6,9], timer3)
     channel3.add_fade([35,ja,37,34,bla,24], timer4)
 
-    channel4.add_fade([ja,bla,ha,bla,ja,ha], timer4)
-    channel5.add_fade([bla,ha,ja,bla,ha,ja], timer3)
-    channel6.add_fade([ja,ha,bla,ja,ha,bla], timer2)
-    channel7.add_fade([bla,bla,ja,ja,ha,ha], timer1)
+    channel4.add_fade([ja,255,ha,bla,ja,ha], timer4)
+    channel5.add_fade([bla,ha,123,bla,ha,ja], timer3)
+    channel6.add_fade([ja,ha,bla,111,ha,bla], timer2)
+    channel7.add_fade([23,bla,ja,ja,ha,ha], timer1)
 
     # this can be used to wait till the fade is complete
 
