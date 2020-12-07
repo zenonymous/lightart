@@ -8,35 +8,35 @@ universe1 = node.add_universe(1)
 universe2 = node.add_universe(2)
 universe3 = node.add_universe(3)
 
-channel_a = universe0.add_channel(start=1, width=24)
-channel_b = universe0.add_channel(start=25, width=24)
-channel_c = universe0.add_channel(start=49, width=24)
-channel_d = universe0.add_channel(start=73, width=23)
+strip1_a = universe0.add_channel(start=1, width=24)
+strip1_b = universe0.add_channel(start=25, width=24)
+strip1_c = universe0.add_channel(start=49, width=24)
+strip1_d = universe0.add_channel(start=73, width=23)
 # omdat strip 2 bovenaan begint keer ik expres de namen van de channels om
-channel_h = universe0.add_channel(start=97, width=24)
-channel_g = universe0.add_channel(start=121, width=24)
-channel_f = universe0.add_channel(start=145, width=25)
-channel_e = universe1.add_channel(start=1, width=23)
+strip2_d = universe0.add_channel(start=97, width=24)
+strip2_c = universe0.add_channel(start=121, width=24)
+strip2_b = universe0.add_channel(start=145, width=25)
+strip2_a = universe1.add_channel(start=1, width=23)
 # strip 3 begint weer onderaan
-channel_i = universe1.add_channel(start=24, width=24)
-channel_j = universe1.add_channel(start=48, width=24)
-channel_k = universe1.add_channel(start=72, width=24)
-channel_l = universe1.add_channel(start=96, width=22)
+strip3_a = universe1.add_channel(start=24, width=24)
+strip3_b = universe1.add_channel(start=48, width=24)
+strip3_c = universe1.add_channel(start=72, width=24)
+strip3_d = universe1.add_channel(start=96, width=22)
 #strip 4 begint bovenaan
-channel_p = universe2.add_channel(start=1, width=24)
-channel_o = universe2.add_channel(start=25, width=24)
-channel_n = universe2.add_channel(start=49, width=24)
-channel_m = universe2.add_channel(start=73, width=23)
+strip4_d = universe2.add_channel(start=1, width=24)
+strip4_c = universe2.add_channel(start=25, width=24)
+strip4_b = universe2.add_channel(start=49, width=24)
+strip4_a = universe2.add_channel(start=73, width=23)
 # strip 5 begint weer onderaan
-channel_q = universe2.add_channel(start=97, width=24)
-channel_r = universe2.add_channel(start=121, width=24)
-channel_s = universe2.add_channel(start=145, width=25)
-channel_t = universe3.add_channel(start=1, width=23)
+strip5_a = universe2.add_channel(start=97, width=24)
+strip5_b = universe2.add_channel(start=121, width=24)
+strip5_c = universe2.add_channel(start=145, width=25)
+strip5_d = universe3.add_channel(start=1, width=23)
 # strip 6 begint bovenaan
-channel_x = universe3.add_channel(start=24, width=24)
-channel_w = universe3.add_channel(start=48, width=24)
-channel_v = universe3.add_channel(start=72, width=24)
-channel_u = universe3.add_channel(start=96, width=22)
+strip6_d = universe3.add_channel(start=24, width=24)
+strip6_c = universe3.add_channel(start=48, width=24)
+strip6_b = universe3.add_channel(start=72, width=24)
+strip6_a = universe3.add_channel(start=96, width=22)
 
 
 #async def blackout():
@@ -66,7 +66,7 @@ async def functie():
 
     # this can be used to wait till the fade is complete
 
-    await channel_a.wait_till_fade_complete()
+    await strip1_a.wait_till_fade_complete()
     
     #channel.add_fade([0,0,0,0,0,0], timer4)
     #channel1.add_fade([0,0,0,0,0,0], timer3)
@@ -74,6 +74,6 @@ async def functie():
     #channel3.add_fade([0,0,0,0,0,0], timer1)
 
 
-    await channel_a.wait_till_fade_complete()
+    await strip1_a.wait_till_fade_complete()
 
 asyncio.run(functie())
