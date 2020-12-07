@@ -118,12 +118,12 @@ async def blackout_strips_c(timer):
 async def strips_d(color, timer):
     await node.start()
 
-    strip1_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
-    strip2_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
-    strip3_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
-    strip4_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
-    strip5_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
-    strip6_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,], timer)
+    strip1_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
+    strip2_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
+    strip3_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
+    strip4_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
+    strip5_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
+    strip6_d.add_fade([color,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], timer)
 
     await strip1_d.wait_till_fade_complete()
 
@@ -174,9 +174,9 @@ async def functie():
 
 #asyncio.run(start())
 #asyncio.run(functie())
-asyncio.run(strips_a(255, 1000))
+#asyncio.run(strips_a(255, 1000))
 #asyncio.run(strips_a(0, 1000))
 #asyncio.run(blackout_strips_a(1000))
-asyncio.run(strips_b(255, 1000))
+#asyncio.run(strips_b(255, 1000))
 #asyncio.run(strips_c(255, 1000))
-#asyncio.run(strips_d(255, 1000))
+asyncio.run(strips_d(255, 1000))
