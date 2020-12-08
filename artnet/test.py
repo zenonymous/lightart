@@ -76,8 +76,8 @@ channelb26 = universe1.add_channel(start=61, width=15)
 channelb27 = universe1.add_channel(start=46, width=15)
 channelb28 = universe1.add_channel(start=31, width=15)
 channelb29 = universe1.add_channel(start=16, width=15)
-channelb30 = universe0.add_channel(start=1, width=15)
-channelb30 = universe0.add_channel(start=496, width=15)
+#channelb30 = universe0.add_channel(start=1, width=15)
+#channelb30 = universe0.add_channel(start=496, width=15)
 channelb31 = universe0.add_channel(start=481, width=15)
 
 async def functie():
@@ -120,15 +120,15 @@ async def functie():
     # Fade channel to 255,0,0 in 5s
     # The fade will automatically run in the background
     channela0.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)  
-    channela1.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
-    channela2.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
-    channelb3.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0],  1000)
-    channelb4.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
-    channelb14.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
-    channela18.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
-    channelb21.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
-    channela17.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
-    channelb28.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+    channelb17.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+   # channela2.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+   # channelb3.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0],  1000)
+   # channelb4.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+   # channelb14.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+   # channela18.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+   # channelb21.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+   # channela17.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
+   # channelb28.add_fade([255,0,0,255,0,0,255,0,0,255,0,0,255,0,0], 1000)
     
     
  
@@ -142,15 +142,15 @@ async def functie():
     # this can be used to wait till the fade is complete
 
     await channela0.wait_till_fade_complete()
-    await channela1.wait_till_fade_complete()
-    await channela2.wait_till_fade_complete()
-    await channelb3.wait_till_fade_complete()
-    await channelb4.wait_till_fade_complete()
-    await channelb14.wait_till_fade_complete()
-    await channela18.wait_till_fade_complete()
-    await channelb21.wait_till_fade_complete()
-    await channela17.wait_till_fade_complete()
-    await channelb28.wait_till_fade_complete()
+    await channelb17.wait_till_fade_complete()
+   # await channela2.wait_till_fade_complete()
+   # await channelb3.wait_till_fade_complete()
+   # await channelb4.wait_till_fade_complete()
+   # await channelb14.wait_till_fade_complete()
+   # await channela18.wait_till_fade_complete()
+   # await channelb21.wait_till_fade_complete()
+   # await channela17.wait_till_fade_complete()
+   # await channelb28.wait_till_fade_complete()
     
 
 
