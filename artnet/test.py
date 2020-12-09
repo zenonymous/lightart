@@ -336,6 +336,9 @@ async def functie():
 # Fade channel to 255,0,0 in 5s
 # The fade will automatically run in the background
 #stap 1
+   for _ in range(50):
+    print "
+    
     fixturea1.add_fade([255,0,0,255,0,0], 1000)
     fixtureb1.add_fade([255,0,0,255,0,0], 1000)
     fixturec1.add_fade([255,0,0,255,0,0], 1000)
@@ -446,6 +449,13 @@ async def functie():
     fixturee4.add_fade([0,0,0,0,0,0], 1000)
     fixturef4.add_fade([0,0,0,0,0,0], 1000)
     
+    fixturea5.add_fade([255,0,0,255,0,0], 1000)
+    fixtureb5.add_fade([255,0,0,255,0,0], 1000)
+    fixturec5.add_fade([255,0,0,255,0,0], 1000)
+    fixtured5.add_fade([255,0,0,255,0,0], 1000)
+    fixturee5.add_fade([255,0,0,255,0,0], 1000)
+    fixturef5.add_fade([255,0,0,255,0,0], 1000)
+    
     await fixturea4.wait_till_fade_complete()
     await fixtureb4.wait_till_fade_complete()
     await fixturec4.wait_till_fade_complete()
@@ -453,6 +463,159 @@ async def functie():
     await fixturee4.wait_till_fade_complete()
     await fixturef4.wait_till_fade_complete()
     
+    await fixturea5.wait_till_fade_complete()
+    await fixtureb5.wait_till_fade_complete()
+    await fixturec5.wait_till_fade_complete()
+    await fixtured5.wait_till_fade_complete()
+    await fixturee5.wait_till_fade_complete()
+    await fixturef5.wait_till_fade_complete()
+    
+    #stap 6 
+    fixturea5.add_fade([0,0,0,0,0,0], 1000)
+    fixtureb5.add_fade([0,0,0,0,0,0], 1000)
+    fixturec5.add_fade([0,0,0,0,0,0], 1000)
+    fixtured5.add_fade([0,0,0,0,0,0], 1000)
+    fixturee5.add_fade([0,0,0,0,0,0], 1000)
+    fixturef5.add_fade([0,0,0,0,0,0], 1000)
+    
+    fixturea6.add_fade([255,0,0,255,0,0], 1000)
+    fixtureb6.add_fade([255,0,0,255,0,0], 1000)
+    fixturec6.add_fade([255,0,0,255,0,0], 1000)
+    fixtured6.add_fade([255,0,0,255,0,0], 1000)
+    fixturee6.add_fade([255,0,0,255,0,0], 1000)
+    fixturef6.add_fade([255,0,0,255,0,0], 1000)
+    
+    await fixturea5.wait_till_fade_complete()
+    await fixtureb5.wait_till_fade_complete()
+    await fixturec5.wait_till_fade_complete()
+    await fixtured5.wait_till_fade_complete()
+    await fixturee5.wait_till_fade_complete()
+    await fixturef5.wait_till_fade_complete()
+    
+    await fixturea6.wait_till_fade_complete()
+    await fixtureb6.wait_till_fade_complete()
+    await fixturec6.wait_till_fade_complete()
+    await fixtured6.wait_till_fade_complete()
+    await fixturee6.wait_till_fade_complete()
+    await fixturef6.wait_till_fade_complete()
 
+    #stap 7 
+    fixturea6.add_fade([0,0,0,0,0,0], 1000)
+    fixtureb6.add_fade([0,0,0,0,0,0], 1000)
+    fixturec6.add_fade([0,0,0,0,0,0], 1000)
+    fixtured6.add_fade([0,0,0,0,0,0], 1000)
+    fixturee6.add_fade([0,0,0,0,0,0], 1000)
+    fixturef6.add_fade([0,0,0,0,0,0], 1000)
+    
+    fixturea7.add_fade([255,0,0,255,0,0], 1000)
+    fixtureb7.add_fade([255,0,0,255,0,0], 1000)
+    fixturec7.add_fade([255,0,0,255,0,0], 1000)
+    fixtured7.add_fade([255,0,0,255,0,0], 1000)
+    fixturee7.add_fade([255,0,0,255,0,0], 1000)
+    fixturef7.add_fade([255,0,0,255,0,0], 1000)
+    
+    await fixturea6.wait_till_fade_complete()
+    await fixtureb6.wait_till_fade_complete()
+    await fixturec6.wait_till_fade_complete()
+    await fixtured6.wait_till_fade_complete()
+    await fixturee6.wait_till_fade_complete()
+    await fixturef6.wait_till_fade_complete()
+    
+    await fixturea7.wait_till_fade_complete()
+    await fixtureb7.wait_till_fade_complete()
+    await fixturec7.wait_till_fade_complete()
+    await fixtured7.wait_till_fade_complete()
+    await fixturee7.wait_till_fade_complete()
+    await fixturef7.wait_till_fade_complete()
+    
+    #stap 8 
+    fixturea7.add_fade([0,0,0,0,0,0], 1000)
+    fixtureb7.add_fade([0,0,0,0,0,0], 1000)
+    fixturec7.add_fade([0,0,0,0,0,0], 1000)
+    fixtured7.add_fade([0,0,0,0,0,0], 1000)
+    fixturee7.add_fade([0,0,0,0,0,0], 1000)
+    fixturef7.add_fade([0,0,0,0,0,0], 1000)
+    
+    fixturea8.add_fade([255,0,0,255,0,0], 1000)
+    fixtureb8.add_fade([255,0,0,255,0,0], 1000)
+    fixturec8.add_fade([255,0,0,255,0,0], 1000)
+    fixtured8.add_fade([255,0,0,255,0,0], 1000)
+    fixturee8.add_fade([255,0,0,255,0,0], 1000)
+    fixturef8.add_fade([255,0,0,255,0,0], 1000)
+    
+    await fixturea7.wait_till_fade_complete()
+    await fixtureb7.wait_till_fade_complete()
+    await fixturec7.wait_till_fade_complete()
+    await fixtured7.wait_till_fade_complete()
+    await fixturee7.wait_till_fade_complete()
+    await fixturef7.wait_till_fade_complete()
+    
+    await fixturea8.wait_till_fade_complete()
+    await fixtureb8.wait_till_fade_complete()
+    await fixturec8.wait_till_fade_complete()
+    await fixtured8.wait_till_fade_complete()
+    await fixturee8.wait_till_fade_complete()
+    await fixturef8.wait_till_fade_complete()
+    
+    #stap 9 
+    fixturea8.add_fade([0,0,0,0,0,0], 1000)
+    fixtureb8.add_fade([0,0,0,0,0,0], 1000)
+    fixturec8.add_fade([0,0,0,0,0,0], 1000)
+    fixtured8.add_fade([0,0,0,0,0,0], 1000)
+    fixturee8.add_fade([0,0,0,0,0,0], 1000)
+    fixturef8.add_fade([0,0,0,0,0,0], 1000)
+    
+    fixturea9.add_fade([255,0,0,255,0,0], 1000)
+    fixtureb9.add_fade([255,0,0,255,0,0], 1000)
+    fixturec9.add_fade([255,0,0,255,0,0], 1000)
+    fixtured9.add_fade([255,0,0,255,0,0], 1000)
+    fixturee9.add_fade([255,0,0,255,0,0], 1000)
+    fixturef9.add_fade([255,0,0,255,0,0], 1000)
+    
+    await fixturea8.wait_till_fade_complete()
+    await fixtureb8.wait_till_fade_complete()
+    await fixturec8.wait_till_fade_complete()
+    await fixtured8.wait_till_fade_complete()
+    await fixturee8.wait_till_fade_complete()
+    await fixturef8.wait_till_fade_complete()
+    
+    await fixturea9.wait_till_fade_complete()
+    await fixtureb9.wait_till_fade_complete()
+    await fixturec9.wait_till_fade_complete()
+    await fixtured9.wait_till_fade_complete()
+    await fixturee9.wait_till_fade_complete()
+    await fixturef9.wait_till_fade_complete()
+    
+    #stap 10
+    fixturea4.add_fade([0,0,0,0,0,0], 1000)
+    fixtureb4.add_fade([0,0,0,0,0,0], 1000)
+    fixturec4.add_fade([0,0,0,0,0,0], 1000)
+    fixtured4.add_fade([0,0,0,0,0,0], 1000)
+    fixturee4.add_fade([0,0,0,0,0,0], 1000)
+    fixturef4.add_fade([0,0,0,0,0,0], 1000)
+    
+    fixturea5.add_fade([255,0,0,255,0,0], 1000)
+    fixtureb5.add_fade([255,0,0,255,0,0], 1000)
+    fixturec5.add_fade([255,0,0,255,0,0], 1000)
+    fixtured5.add_fade([255,0,0,255,0,0], 1000)
+    fixturee5.add_fade([255,0,0,255,0,0], 1000)
+    fixturef5.add_fade([255,0,0,255,0,0], 1000)
+    
+    await fixturea4.wait_till_fade_complete()
+    await fixtureb4.wait_till_fade_complete()
+    await fixturec4.wait_till_fade_complete()
+    await fixtured4.wait_till_fade_complete()
+    await fixturee4.wait_till_fade_complete()
+    await fixturef4.wait_till_fade_complete()
+    
+    await fixturea5.wait_till_fade_complete()
+    await fixtureb5.wait_till_fade_complete()
+    await fixturec5.wait_till_fade_complete()
+    await fixtured5.wait_till_fade_complete()
+    await fixturee5.wait_till_fade_complete()
+    await fixturef5.wait_till_fade_complete()
+    
+    
+    
 asyncio.run(functie())
-
+"
