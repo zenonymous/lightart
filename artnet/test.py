@@ -317,17 +317,7 @@ fixturef46 = universe3.add_channel(start=337, width=6)
 fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
- #"Green"
-def Green():
-    print("255,0,0,255,0,0")
-    
-#"Red"
-def Red():
-    print("0,255,0,0,255,0")
-    
-    #"Blue"
-def Blue():
-    print("0,0,255,0,0,255")
+
 
 async def functie():
     
@@ -347,7 +337,17 @@ async def functie():
 #    StartOfChannel = 1
 #    for x in range(170):
 #    channel
-
+ #"Green"
+def Green():
+    print("255,0,0,255,0,0")
+    
+#"Red"
+def Red():
+    print("0,255,0,0,255,0")
+    
+    #"Blue"
+def Blue():
+    print("0,0,255,0,0,255")
 
 # output van de leds 
 # Fade channel to 255,0,0 in 5s
