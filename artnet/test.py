@@ -2,6 +2,10 @@ from pyartnet import ArtNetNode
 import asyncio
 import time
 
+#"Green"
+def Green
+    print("255,0,0,255,0,0")
+
 #dit stukje is om de dmx nodes aan te geven 
 node0 = ArtNetNode('2.0.0.2')
 node1= ArtNetNode('2.0.0.2')
@@ -336,7 +340,7 @@ async def functie():
 # Fade channel to 255,0,0 in 5s
 # The fade will automatically run in the background
 #stap 1
-    fixturea1.add_fade([255,0,0,255,0,0], 1000)
+    fixturea1.add_fade(["Green"], 1000)
     fixtureb1.add_fade([255,0,0,255,0,0], 1000)
     fixturec1.add_fade([255,0,0,255,0,0], 1000)
     fixtured1.add_fade([255,0,0,255,0,0], 1000)
