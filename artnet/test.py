@@ -340,7 +340,7 @@ async def functie():
 
 
 #stap 1
-def GREEN():
+async def GREEN():
     print("255,0,0,255,0,0")
 
     fixturea1.add_fade([GREEN()], 1000)
