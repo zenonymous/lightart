@@ -369,7 +369,7 @@ async def functie():
     await fixtureb1.wait_till_fade_complete()
  
 #stap2
-    fixturea1.add_fade(["Green"], 1000)
+    fixturea1.add_fade([Green], 1000)
     fixtureb1.add_fade([0,0,0,0,0,0], 1000)
     fixturec1.add_fade([0,0,0,0,0,0], 1000)
     fixtured1.add_fade([0,0,0,0,0,0], 1000)
