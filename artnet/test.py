@@ -316,7 +316,6 @@ fixturef48 = universe3.add_channel(start=349, width=6)
 
 def GREEN():
     print("255,0,0,255,0,0")
-asyncio.run(GREEN())
 
 
 async def functie():
