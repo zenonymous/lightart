@@ -2,17 +2,7 @@ from pyartnet import ArtNetNode
 import asyncio
 import time
 
-#"Green"
-def Green():
-    print("255,0,0,255,0,0")
-    
-#"Red"
-def Red():
-    print("0,255,0,0,255,0")
-    
-    #"Blue"
-def Blue():
-    print("0,0,255,0,0,255")
+
 
 
 #dit stukje is om de dmx nodes aan te geven 
@@ -328,6 +318,18 @@ fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
 async def functie():
+    
+    #"Green"
+def Green():
+    print("255,0,0,255,0,0")
+    
+#"Red"
+def Red():
+    print("0,255,0,0,255,0")
+    
+    #"Blue"
+def Blue():
+    print("0,0,255,0,0,255")
 
     #hier starten we de 4 nodes 
     await node0.start()
@@ -365,7 +367,7 @@ async def functie():
     await fixtureb1.wait_till_fade_complete()
  
 #stap2
-    fixturea1.add_fade([0,0,0,0,0,0], 1000)
+    fixturea1.add_fade(["Green"], 1000)
     fixtureb1.add_fade([0,0,0,0,0,0], 1000)
     fixturec1.add_fade([0,0,0,0,0,0], 1000)
     fixtured1.add_fade([0,0,0,0,0,0], 1000)
