@@ -3,7 +3,7 @@ import asyncio
 import time
 
 def Green():
-    print("255,0,0,255,0,0")
+    print("[255,0,0,255,0,0]")
     
 def Red():
     print("0,255,0,0,255,0")
@@ -349,7 +349,7 @@ async def functie():
 # Fade channel to 255,0,0 in 5s
 # The fade will automatically run in the background
 #stap 1
-    fixturea1.add_fade(["Green"], 1000)
+    fixturea1.add_fade(Green(), 1000)
     fixtureb1.add_fade([255,0,0,255,0,0], 1000)
     fixturec1.add_fade([255,0,0,255,0,0], 1000)
     fixtured1.add_fade([255,0,0,255,0,0], 1000)
