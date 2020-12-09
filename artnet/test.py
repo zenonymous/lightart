@@ -142,7 +142,7 @@ fixturec24 = universe1.add_channel(start=205, width=6)
 fixturec25 = universe1.add_channel(start=211, width=6)
 fixturec26 = universe1.add_channel(start=217, width=6)
 fixturec27 = universe1.add_channel(start=223, width=6)
-fixturec28 = universe1.add_channel(start=229,  width=6)
+fixturec28 = universe1.add_channel(start=229, width=6)
 fixturec29 = universe1.add_channel(start=235, width=6)
 fixturec30 = universe1.add_channel(start=241, width=6)
 fixturec31 = universe1.add_channel(start=247, width=6)
@@ -242,7 +242,7 @@ fixturee24 = universe2.add_channel(start=433, width=6)
 fixturee25 = universe2.add_channel(start=427, width=6)
 fixturee26 = universe2.add_channel(start=421, width=6)
 fixturee27 = universe2.add_channel(start=415, width=6)
-fixturee28 = universe2.add_channel(start=409,  width=6)
+fixturee28 = universe2.add_channel(start=409, width=6)
 fixturee29 = universe2.add_channel(start=403, width=6)
 fixturee30 = universe2.add_channel(start=397, width=6)
 fixturee31 = universe2.add_channel(start=391, width=6)
@@ -314,11 +314,9 @@ fixturef46 = universe3.add_channel(start=337, width=6)
 fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
-def GREEN():
-    print("255,0,0,255,0,0")
 
 
-async def functie():
+async def functie(color):
     #hier starten we de 4 nodes 
     await node0.start()
     await node1.start()
@@ -338,12 +336,12 @@ async def functie():
 
 #stap 1
 
-    fixturea1.add_fade([GREEN()], 1000)
-    fixtureb1.add_fade([255,0,0,255,0,0], 1000)
-    fixturec1.add_fade([255,0,0,255,0,0], 1000)
-    fixtured1.add_fade([255,0,0,255,0,0], 1000)
-    fixturee1.add_fade([255,0,0,255,0,0], 1000)
-    fixturef1.add_fade([255,0,0,255,0,0], 1000)
+    fixturea1.add_fade([0,0,color,0,0,color], 1000)
+    fixtureb1.add_fade([color,0,0,color,0,0], 1000)
+    fixturec1.add_fade([color,0,0,color,0,0], 1000)
+    fixtured1.add_fade([color,0,0,color,0,0], 1000)
+    fixturee1.add_fade([color,0,0,color,0,0], 1000)
+    fixturef1.add_fade([color,0,0,color,0,0], 1000)
     
  # this can be used to wait till the fade is complete
     await fixturea1.wait_till_fade_complete()
@@ -614,5 +612,5 @@ async def functie():
     await fixturee5.wait_till_fade_complete()
     await fixturef5.wait_till_fade_complete()
     
-asyncio.run(functie())
-
+asyncio.run(functie(124))
+asyncio.run(functie(255))
