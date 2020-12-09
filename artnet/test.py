@@ -351,6 +351,12 @@ async def fixture1(color):
     fixturee1.add_fade([0,0,0,0,0,0], 1000)
     fixturef1.add_fade([0,0,0,0,0,0], 1000)   
    
+    await fixturea1.wait_till_fade_complete()
+    await fixtureb1.wait_till_fade_complete()
+    await fixturec1.wait_till_fade_complete()
+    await fixtured1.wait_till_fade_complete()
+    await fixturee1.wait_till_fade_complete()
+    await fixturef1.wait_till_fade_complete()   
    
 async def functie(color):
     #hier starten we de 4 nodes 
