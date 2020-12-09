@@ -320,8 +320,13 @@ async def startnodes():
     await node2.start()
     await node3.start()
    
-async fixture1():
+async def fixture1(color):
 #stap 1
+    await node0.start()
+    await node1.start()
+    await node2.start()
+    await node3.start()
+
 
     fixturea1.add_fade([0,0,color,0,0,color], 1000)
     fixtureb1.add_fade([color,0,0,color,0,0], 1000)
@@ -643,5 +648,7 @@ async def functie(color):
     await fixturee5.wait_till_fade_complete()
     await fixturef5.wait_till_fade_complete()
     
-asyncio.run(functie(124))
-asyncio.run(functie(255))
+#asyncio.run(functie(124))
+#asyncio.run(functie(255))
+#asyncio.run(startnodes())
+asyncio.run(fixture1(255))
