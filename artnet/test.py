@@ -315,7 +315,7 @@ fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
 async def GREEN():
-    print("255,0,0,255,0,0"))
+    print("255,0,0,255,0,0")
 
 
 
