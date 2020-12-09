@@ -3,8 +3,17 @@ import asyncio
 import time
 
 #"Green"
-def Green
+def Green():
     print("255,0,0,255,0,0")
+    
+#"Red"
+def Red():
+    print("0,255,0,0,255,0")
+    
+    #"Blue"
+def Blue():
+    print("0,0,255,0,0,255")
+
 
 #dit stukje is om de dmx nodes aan te geven 
 node0 = ArtNetNode('2.0.0.2')
@@ -341,8 +350,8 @@ async def functie():
 # The fade will automatically run in the background
 #stap 1
     fixturea1.add_fade(["Green"], 1000)
-    fixtureb1.add_fade([255,0,0,255,0,0], 1000)
-    fixturec1.add_fade([255,0,0,255,0,0], 1000)
+    fixtureb1.add_fade(["Red"], 1000)
+    fixturec1.add_fade(["Blue"], 1000)
     fixtured1.add_fade([255,0,0,255,0,0], 1000)
     fixturee1.add_fade([255,0,0,255,0,0], 1000)
     fixturef1.add_fade([255,0,0,255,0,0], 1000)
