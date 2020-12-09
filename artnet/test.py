@@ -4,15 +4,15 @@ import time
 
 #"Green"
 def Green():
-    print("255,0,0,255,0,0")
+    Print("255,0,0,255,0,0")
     
 #"Red"
 def Red():
-    print("0,255,0,0,255,0")
+    Print("0,255,0,0,255,0")
     
     #"Blue"
 def Blue():
-    print("0,0,255,0,0,255")
+    Print("0,0,255,0,0,255")
 
 
 #dit stukje is om de dmx nodes aan te geven 
