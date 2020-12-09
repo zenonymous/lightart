@@ -314,14 +314,45 @@ fixturef46 = universe3.add_channel(start=337, width=6)
 fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
-
-
-async def functie(color):
-    #hier starten we de 4 nodes 
+async def startnodes():
     await node0.start()
     await node1.start()
     await node2.start()
     await node3.start()
+   
+async fixture1():
+#stap 1
+
+    fixturea1.add_fade([0,0,color,0,0,color], 1000)
+    fixtureb1.add_fade([color,0,0,color,0,0], 1000)
+    fixturec1.add_fade([color,0,0,color,0,0], 1000)
+    fixtured1.add_fade([color,0,0,color,0,0], 1000)
+    fixturee1.add_fade([color,0,0,color,0,0], 1000)
+    fixturef1.add_fade([color,0,0,color,0,0], 1000)
+    
+ # this can be used to wait till the fade is complete
+    await fixturea1.wait_till_fade_complete()
+    await fixtureb1.wait_till_fade_complete()
+    await fixturec1.wait_till_fade_complete()
+    await fixtured1.wait_till_fade_complete()
+    await fixturee1.wait_till_fade_complete()
+    await fixturef1.wait_till_fade_complete()   
+   
+ # stap2
+    fixturea1.add_fade([0,0,0,0,0,0], 1000)
+    fixtureb1.add_fade([0,0,0,0,0,0], 1000)
+    fixturec1.add_fade([0,0,0,0,0,0], 1000)
+    fixtured1.add_fade([0,0,0,0,0,0], 1000)
+    fixturee1.add_fade([0,0,0,0,0,0], 1000)
+    fixturef1.add_fade([0,0,0,0,0,0], 1000)   
+   
+   
+async def functie(color):
+    #hier starten we de 4 nodes 
+#    await node0.start()
+#    await node1.start()
+#    await node2.start()
+#    await node3.start()
 
 #    universe0 = node.add_universe(2,1)
  #GG   universe1 = node.add_universe(0)
