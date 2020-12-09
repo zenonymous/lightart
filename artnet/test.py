@@ -314,14 +314,12 @@ fixturef46 = universe3.add_channel(start=337, width=6)
 fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
-
+async def GREEN():
+    print("255,0,0,255,0,0"))
 
 
 
 async def functie():
-    
-   
-
     #hier starten we de 4 nodes 
     await node0.start()
     await node1.start()
@@ -340,8 +338,6 @@ async def functie():
 
 
 #stap 1
-async def GREEN():
-    print("255,0,0,255,0,0")
 
     fixturea1.add_fade([GREEN()], 1000)
     fixtureb1.add_fade([255,0,0,255,0,0], 1000)
