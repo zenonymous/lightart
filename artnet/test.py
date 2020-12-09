@@ -363,10 +363,10 @@ def Blue():
  # this can be used to wait till the fade is complete
     await fixturea1.wait_till_fade_complete()
     await fixtureb1.wait_till_fade_complete()
-    await fixtureb1.wait_till_fade_complete()
-    await fixtureb1.wait_till_fade_complete()
-    await fixtureb1.wait_till_fade_complete()
-    await fixtureb1.wait_till_fade_complete()
+    await fixturec1.wait_till_fade_complete()
+    await fixtured1.wait_till_fade_complete()
+    await fixturee1.wait_till_fade_complete()
+    await fixturef1.wait_till_fade_complete()
  
 #stap2
     fixturea1.add_fade([0,0,0,0,0,0], 1000)
