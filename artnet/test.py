@@ -343,7 +343,7 @@ async def functie():
 #stap 1
 
 
-    fixturea1.add_fade([Green()], 1000)
+    fixturea1.add_fade([Green], 1000)
     fixtureb1.add_fade([255,0,0,255,0,0], 1000)
     fixturec1.add_fade([255,0,0,255,0,0], 1000)
     fixtured1.add_fade([255,0,0,255,0,0], 1000)
