@@ -314,6 +314,47 @@ fixturef46 = universe3.add_channel(start=337, width=6)
 fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
+async def breathe(intensity):
+    await node0.start()
+    await node1.start()
+    await node2.start()
+    await node3.start()
+
+    for i in range(1, 48):
+        for x in range(97, 103):
+            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1000)
+
+    for i in range(1, 6):
+        for x in range(97, 103):
+            globals()["fixture{:c}{}".format(x,i)].add_fade([0,255,0,0,255,0], 1000)
+
+    for i in range(1, 48):
+        for x in range(97,103):
+            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
+
+#    await node0.stop()
+#    await node1.stop()
+#    await node2.stop()
+#    await node3.stop()
+    
+#    await node0.start()
+#    await node1.start()
+#    await node2.start()
+#    await node3.start()
+
+    for i in range(1, 48):
+        for x in range(97, 103):
+            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 1000)
+
+    for i in range(1, 48):
+        for x in range(97, 103):
+            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
+
+    await node0.stop()
+    await node1.stop()
+    await node2.stop()
+    await node3.stop()
+
 async def breathe_in(intensity):
     await node0.start()
     await node1.start()
@@ -360,8 +401,10 @@ async def breathe_out():
 for i in range(175, 255):
 #    asyncio.run(fixture1(i))
 #    print(i)
-    asyncio.run(breathe_in(i))
-    time.sleep(1)
-    asyncio.run(breathe_out())
-    time.sleep(1)
+    asyncio.run(breathe(i))
+
+#    asyncio.run(breathe_in(i))
+#    time.sleep(1)
+#    asyncio.run(breathe_out())
+#    time.sleep(1)
 
