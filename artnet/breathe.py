@@ -322,7 +322,11 @@ async def breathe_in(intensity):
 
     for i in range(1, 48):
         for x in range(97, 103):
-            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1000)            
+            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1000)
+
+    for i in range(1, 6):
+        for x in range(97, 103):
+            globals()["fixture{:c}{}".format(x,i)].add_fade([0,255,0,0,255,0], 1000)
 
     for i in range(1, 48):
         for x in range(97,103):
@@ -332,7 +336,6 @@ async def breathe_in(intensity):
     await node1.stop()
     await node2.stop()
     await node3.stop()
-
 
 async def breathe_out():
     await node0.start()
@@ -354,10 +357,11 @@ async def breathe_out():
     await node3.stop()
 
 
-#for i in range(255):
+for i in range(175, 255):
 #    asyncio.run(fixture1(i))
-
-asyncio.run(breathe_in(255))
-asyncio.run(breathe_out())
-
+#    print(i)
+    asyncio.run(breathe_in(i))
+    time.sleep(1)
+    asyncio.run(breathe_out())
+    time.sleep(1)
 
