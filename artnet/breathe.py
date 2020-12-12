@@ -1,7 +1,7 @@
 from pyartnet import ArtNetNode
 import asyncio
 import time
-   
+
 #dit stukje is om de dmx nodes aan te geven 
 node0 = ArtNetNode('2.0.0.2')
 node1= ArtNetNode('2.0.0.2')
@@ -315,44 +315,44 @@ fixturef47 = universe3.add_channel(start=343, width=6)
 fixturef48 = universe3.add_channel(start=349, width=6)
 
 async def breathe_in(intensity):
-	await node0.start()
-	await node1.start()
-	await node2.start()
-	await node3.start()
+    await node0.start()
+    await node1.start()
+    await node2.start()
+    await node3.start()
 
     for i in range(1, 48):
         for x in range(97, 103):
-			globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1000)            
+            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1000)            
 
-	for i in range(1, 48):
-		for x in range(97,103):
-			await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
+    for i in range(1, 48):
+        for x in range(97,103):
+            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
 
-	await node0.stop()
-	await node1.stop()
-	await node2.stop()
-	await node3.stop()
+    await node0.stop()
+    await node1.stop()
+    await node2.stop()
+    await node3.stop()
 
 
 async def breathe_out():
-	await node0.start()
-	await node1.start()
-	await node2.start()
-	await node3.start()
+    await node0.start()
+    await node1.start()
+    await node2.start()
+    await node3.start()
 
-	for i in range(1, 48):
-		for x in range(97, 103):
-			globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 1000)
+    for i in range(1, 48):
+        for x in range(97, 103):
+            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 1000)
 
-	for i in range(1, 48):
-		for x in range(97, 103):
-			await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
+    for i in range(1, 48):
+        for x in range(97, 103):
+            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
 
-	await node0.stop()
-	await node1.stop()
-	await node2.stop()
-	await node3.stop()
-   
+    await node0.stop()
+    await node1.stop()
+    await node2.stop()
+    await node3.stop()
+
 
 #for i in range(255):
 #    asyncio.run(fixture1(i))
