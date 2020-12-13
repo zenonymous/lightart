@@ -334,9 +334,19 @@ async def breathe(intensity,step):
                 mapping = list(map(lambda x: ((x+(index*8))%48)+1, start_points))
                 print(letter, mapping)
                 print(letter)
+#                for y in range(mapping[0], mapping[-1]+1):
+                globals()["fixture{}{}".format("a",y)].add_fade([0,255,0,0,255,0], 1000)
+                globals()["fixture{}{}".format("b",y+2)].add_fade([0,255,0,0,255,0], 1000)
+                globals()["fixture{}{}".format("c",y+4)].add_fade([0,255,0,0,255,0], 1000)
+                globals()["fixture{}{}".format("d",y+6)].add_fade([0,255,0,0,255,0], 1000)
+                globals()["fixture{}{}".format("e",y+8)].add_fade([0,255,0,0,255,0], 1000)
+                globals()["fixture{}{}".format("f",y+10)].add_fade([0,255,0,0,255,0], 1000)
+                print (y)
+
                 for y in range(mapping[0], mapping[-1]+1):
-                    globals()["fixture{}{}".format(letter,y)].add_fade([0,255,0,0,255,0], 1000)
-                    print (y)
+ #                   await globals()["fixture{}{}".format(letter,y)].wait_till_fade_complete()
+                    globals()["fixture{}{}".format(letter,y)].add_fade([0,0,intensity,0,0,intensity], 1000)
+                    await globals()["fixture{}{}".format(letter,y)].wait_till_fade_complete()
 
   #  for i in range(1, 6):
   #      for x in range(97, 103):
