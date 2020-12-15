@@ -1,4 +1,4 @@
-from pyartnet import ArtNetNode
+from pyartnet import ArtNetNode, output_correction
 import asyncio
 import time
 
@@ -11,6 +11,11 @@ universe0 = node0.add_universe(0)
 universe1 = node1.add_universe(1)
 universe2 = node2.add_universe(2)
 universe3 = node3.add_universe(3)
+
+universe0.output_correction = output_correction.cubic
+universe1.output_correction = output_correction.cubic
+universe2.output_correction = output_correction.cubic
+universe3.output_correction = output_correction.cubic
 
 #hier zorgen we dat alle leds een naam krijgen en geadreseerd zijn binnen hun eigen universe.
 
@@ -92,7 +97,7 @@ fixtureb24 = universe0.add_channel(start=433, width=6)
 fixtureb25 = universe0.add_channel(start=427, width=6)
 fixtureb26 = universe0.add_channel(start=421, width=6)
 fixtureb27 = universe0.add_channel(start=415, width=6)
-fixtureb28 = universe0.add_channel(start=409,  width=6)
+fixtureb28 = universe0.add_channel(start=409, width=6)
 fixtureb29 = universe0.add_channel(start=403, width=6)
 fixtureb30 = universe0.add_channel(start=397, width=6)
 fixtureb31 = universe0.add_channel(start=391, width=6)
@@ -319,51 +324,73 @@ async def breathe(intensity,step):
     await node1.start()
     await node2.start()
     await node3.start()
-    print('---step {}'.format(step))
 #hier maken we breath 
-    for i in range(1, 48):
-        for x in range(97, 103):
-            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1000)
+#    for i in range(1, 49):
+#        for x in range(97, 103):
+#            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1500)
 
-    for x in range(step,48,8):
-        y = x + 8 
-        print(x)
+#    for x in range(0,48,8):
+#        y = x + 8 
+#        print(x)
+#        for shift in range(x,y,8):
+#            start_points = range(shift,shift+8)
+#            for index, letter in enumerate("abcdef"):
+#                mapping = list(map(lambda x: ((x+(index*8))%48)+1, start_points))
+
+#                print('---=> letter {} = {}'.format(letter, mapping))
+#                print(letter, mapping[0], mapping[-1])
+#                print('-=-=-=-=-=-=-')
+#                for y in range(mapping[0], mapping[-1]+1):
+
+    for x in range(0,48,8):
+        y = x + 8
+        print('==-=')
         for shift in range(x,y,8):
             start_points = range(shift,shift+8)
+            print('====')
             for index, letter in enumerate("abcdef"):
                 mapping = list(map(lambda x: ((x+(index*8))%48)+1, start_points))
-                print(letter, mapping)
-                print(letter)
-#                for y in range(mapping[0], mapping[-1]+1):
-                globals()["fixture{}{}".format("a",y)].add_fade([0,255,0,0,255,0], 1000)
-                globals()["fixture{}{}".format("b",y+2)].add_fade([0,255,0,0,255,0], 1000)
-                globals()["fixture{}{}".format("c",y+4)].add_fade([0,255,0,0,255,0], 1000)
-                globals()["fixture{}{}".format("d",y+6)].add_fade([0,255,0,0,255,0], 1000)
-                globals()["fixture{}{}".format("e",y+8)].add_fade([0,255,0,0,255,0], 1000)
-                globals()["fixture{}{}".format("f",y+10)].add_fade([0,255,0,0,255,0], 1000)
-                print (y)
+                print(letter, mapping[0], mapping[-1])
+                for bla in range(mapping[0], mapping[-1]+1):
+                    print (bla)
+                    globals()["fixture{}{}".format(letter,bla)].add_fade([0,255,0,0,255,0], 1000)
+             #await globals()["fixture{}{}".format(letter,bla)].wait_till_fade_complete()
+                for bla in range(mapping[0], mapping[-1]+1):
+                   await globals()["fixture{}{}".format(letter,bla)].wait_till_fade_complete()
+
+
+#                    globals()["fixture{}{}".format(letter,y)].add_fade([0,255,0,0,255,0], 1000)
+#                globals()["fixture{}{}".format("a",y)].add_fade([0,255,0,0,255,0], 1000)
+#                globals()["fixture{}{}".format("b",y+2)].add_fade([0,255,0,0,255,0], 1000)
+#                globals()["fixture{}{}".format("c",y+4)].add_fade([0,255,0,0,255,0], 1000)
+#                globals()["fixture{}{}".format("d",y+6)].add_fade([0,255,0,0,255,0], 1000)
+#                globals()["fixture{}{}".format("e",y+8)].add_fade([0,255,0,0,255,0], 1000)
+#                globals()["fixture{}{}".format("f",y+10)].add_fade([0,255,0,0,255,0], 1000)
+#                print (y)
 
                 for y in range(mapping[0], mapping[-1]+1):
- #                   await globals()["fixture{}{}".format(letter,y)].wait_till_fade_complete()
-                    globals()["fixture{}{}".format(letter,y)].add_fade([0,0,intensity,0,0,intensity], 1000)
+                    await globals()["fixture{}{}".format(letter,y)].wait_till_fade_complete()
+#                    globals()["fixture{}{}".format(letter,y)].add_fade([0,0,intensity,0,0,intensity], 1000)
+                    globals()["fixture{}{}".format(letter,y)].add_fade([0,0,0,0,0,0], 1000)
                     await globals()["fixture{}{}".format(letter,y)].wait_till_fade_complete()
 
   #  for i in range(1, 6):
   #      for x in range(97, 103):
   #          globals()["fixture{:c}{}".format(x,i)].add_fade([0,255,0,0,255,0], 1000)
 
-    for i in range(1, 48):
-        for x in range(97,103):
-            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
+#    for i in range(1, 49):
+#        for x in range(97,103):
+#            print('---bla {:c}{} ---'.format(x,i))
+#            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
 
-    for i in range(1, 48):
-        for x in range(97, 103):
-            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 1000)
+#    for i in range(1, 49):
+#        for x in range(97, 103):
+#            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 1500)
 
-    for i in range(1, 48):
-        for x in range(97, 103):
-            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
-          
+#    for i in range(1, 49):
+#        for x in range(97, 103):
+#            await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
+
 
     await node0.stop()
     await node1.stop()
