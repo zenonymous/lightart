@@ -324,29 +324,12 @@ async def breathe(intensity,step):
     await node1.start()
     await node2.start()
     await node3.start()
-#hier maken we breath 
-#    for i in range(1, 49):
-#        for x in range(97, 103):
-#            globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 1500)
-
-#    for x in range(0,48,8):
-#        y = x + 8 
-#        print(x)
-#        for shift in range(x,y,8):
-#            start_points = range(shift,shift+8)
-#            for index, letter in enumerate("abcdef"):
-#                mapping = list(map(lambda x: ((x+(index*8))%48)+1, start_points))
-
-#                print('---=> letter {} = {}'.format(letter, mapping))
-#                print(letter, mapping[0], mapping[-1])
-#                print('-=-=-=-=-=-=-')
-#                for y in range(mapping[0], mapping[-1]+1):
     print ("step")
     print (step)
     stap = step / 8
     if stap % 2 == 0:
         # even stap is inademen
-        print ("check, aden in") 
+        print ("check, adem in") 
         richting = 1
         print (richting)
     else:
@@ -383,24 +366,40 @@ async def breathe(intensity,step):
 
 
     # tijd om uit te ademen
-    if richting == 0:
+    if richting == 1:
+        print("adem uit")
         # zet alle waardes op zacht blauw (30)
         for i in range(1, 49):
             for x in range(97, 103):
                 globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 1500)
 
             #haal rood van vorige stap weg
+            for x in range(step,48,8):
+                y = x + 8
+                for shift in range(x,y,8):
+                    start_points = range(shift,shift+8)
+                    for index, letter in enumerate("abcdef"):
+                        mapping = list(map(lambda x: ((x+(index*8))%48)+1, start_points))
+                        for y in range(mapping[0], mapping[-1]+1):
+                            #globals()["fixture{}{}".format(letter,y)].add_fade([0,0,0,0,0,0], 1500)
+                            globals()["fixture{}{}".format(letter,y)].add_fade([0,0,intensity,0,0,intensity], 4500)
 
             #zet rood voor volgende stap
+            step = step + 8
+            for x in range(step,48,8):
+                y = x + 8
+                for shift in range(x,y,8):
+                    start_points = range(shift,shift+8)
+                    for index, letter in enumerate("abcdef"):
+                        mapping = list(map(lambda x: ((x+(index*8))%48)+1, start_points))
+                        for y in range(mapping[0], mapping[-1]+1):
+                            #globals()["fixture{}{}".format(letter,y)].add_fade([0,0,0,0,0,0], 1500)
+                            globals()["fixture{}{}".format(letter,y)].add_fade([0,255,0,0,255,0], 4500)
 
+        # initieer de breathe out op alle lampen
         for i in range(1, 49):
             for x in range (97, 103):
                 await globals()["fixture{:c}{}".format(x,i)].wait_till_fade_complete()
-
-                        #initieer de breathe out op alle lampen
-                        #       for i in range(1, 49):
-                        #           for x in range(97, 103):
-                        #               await globals()["fixture{:c}{}".format(x,i).wait_till_fade_complete()
 
     await node0.stop()
     await node1.stop()
@@ -410,9 +409,3 @@ async def breathe(intensity,step):
 for i in range(175, 255):
     for step in range (0,48,8):
         asyncio.run(breathe(i,step))
-
-                        #    asyncio.run(breathe_in(i))
-                        #    time.sleep(1)
-                        #    asyncio.run(breathe_out())
-                        #    time.sleep(1)
-
