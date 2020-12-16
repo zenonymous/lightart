@@ -348,6 +348,7 @@ async def breathe(intensity,step):
         print("alle lampen staan nu op blauw")
 
         # zet rood
+        #in het geval dat er geen bezoekers zijn, is het zaak om de timing van alle dingen gelijk te hebben
         print(f"ik ga nu rood zetten en step is {step}")
         for x in range(step,step+8,8):
             print(f"binnen de loop is x nu {x}")
@@ -360,7 +361,7 @@ async def breathe(intensity,step):
                     for y in range(mapping[0], mapping[-1]+1):
                         #print(f"voor {letter} zetten we {y} op rood")
                         #globals()["fixture{}{}".format(letter,y)].add_fade([0,0,0,0,0,0], 1500)
-                        globals()["fixture{}{}".format(letter,y)].add_fade([0,255,0,0,255,0], 1500)
+                        globals()["fixture{}{}".format(letter,y)].add_fade([0,30,0,0,30,0], 4500)
 
 
         # initieer de breathe in op alle lampen
@@ -377,7 +378,7 @@ async def breathe(intensity,step):
         print("alle lampen gaan nu op zacht blauw, en ik denk dat daarmee ook het gezette rood pleitte is")
         for i in range(1, 49):
             for x in range(97, 103):
-                globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 1500)
+                globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 4500)
 
             #haal rood van vorige stap weg
             print(f"step is nu {step}")
@@ -391,7 +392,7 @@ async def breathe(intensity,step):
                         print(f"voor {letter} zetten we nu {mapping} rood uit")
                         for y in range(mapping[0], mapping[-1]+1):
                             #globals()["fixture{}{}".format(letter,y)].add_fade([0,0,0,0,0,0], 1500)i
-                            globals()["fixture{}{}".format(letter,y)].add_fade([0,0,30,0,0,30], 4500)
+                            globals()["fixture{}{}".format(letter,y)].add_fade([0,0,30,0,0,30], 1500)
 
         #zet rood voor volgende stap
         #if step < 48:
@@ -421,8 +422,8 @@ async def breathe(intensity,step):
     await node2.stop()
     await node3.stop()
 
-#for i in range(175, 255):
-#    print(f"range is nu {i}")
-for step in range (0,48,8):
-    print(f"op het punt breathe aan te roepen en step is nu {step}")
-    asyncio.run(breathe(255,step))
+for i in range(175, 255):
+    print(f"range is nu {i}")
+    for step in range (0,48,8):
+        print(f"op het punt breathe aan te roepen en step is nu {step}")
+        asyncio.run(breathe(255,step))
