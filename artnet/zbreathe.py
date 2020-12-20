@@ -1,6 +1,9 @@
 from pyartnet import ArtNetNode, output_correction
 import asyncio
 import time
+import subprocess
+import re
+
 
 #dit stukje is om de dmx nodes aan te geven 
 node0 = ArtNetNode('2.0.0.2')
@@ -324,6 +327,14 @@ async def breathe(intensity,step):
     await node1.start()
     await node2.start()
     await node3.start()
+    print(f"begin i -> {intensity}")
+    timer = 4500
+
+    if intensity == 0:
+        print ("intensity is 0, set timer to 1500")
+        timer = 1500
+
+
     print(f"begin breathe ->step is nu {step}")
     stap = step / 8
     print(f"===> stap is nu {stap}")
@@ -344,7 +355,7 @@ async def breathe(intensity,step):
         # zet alle waardes op blauw
         for i in range(1, 49):
             for x in range(97, 103):
-                globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,intensity,0,0,intensity], 4500)
+                globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,255,0,0,255], timer)
         print("alle lampen staan nu op blauw")
 
         # zet rood
@@ -361,8 +372,7 @@ async def breathe(intensity,step):
                     for y in range(mapping[0], mapping[-1]+1):
                         #print(f"voor {letter} zetten we {y} op rood")
                         #globals()["fixture{}{}".format(letter,y)].add_fade([0,0,0,0,0,0], 1500)
-                        globals()["fixture{}{}".format(letter,y)].add_fade([0,30,0,0,30,0], 4500)
-
+                        globals()["fixture{}{}".format(letter,y)].add_fade([0,intensity,0,0,intensity,0], 1500)
 
         # initieer de breathe in op alle lampen
         for i in range(1, 49):
@@ -378,7 +388,7 @@ async def breathe(intensity,step):
         print("alle lampen gaan nu op zacht blauw, en ik denk dat daarmee ook het gezette rood pleitte is")
         for i in range(1, 49):
             for x in range(97, 103):
-                globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], 4500)
+                globals()["fixture{:c}{}".format(x,i)].add_fade([0,0,30,0,0,30], timer)
 
             #haal rood van vorige stap weg
             print(f"step is nu {step}")
@@ -409,7 +419,7 @@ async def breathe(intensity,step):
                     print(f"voor {letter} zetten we nu {mapping} op rood")
                     for y in range(mapping[0], mapping[-1]+1):
                         #globals()["fixture{}{}".format(letter,y)].add_fade([0,0,0,0,0,0], 1500)
-                        globals()["fixture{}{}".format(letter,y)].add_fade([0,255,0,0,255,0], 1500)
+                        globals()["fixture{}{}".format(letter,y)].add_fade([0,intensity,0,0,intensity,0], 1500)
 
         # initieer de breathe out op alle lampen
         for i in range(1, 49):
@@ -422,8 +432,28 @@ async def breathe(intensity,step):
     await node2.stop()
     await node3.stop()
 
-for i in range(175, 255):
-    print(f"range is nu {i}")
-    for step in range (0,48,8):
-        print(f"op het punt breathe aan te roepen en step is nu {step}")
-        asyncio.run(breathe(255,step))
+while True:
+    output = subprocess.check_output("cat /home/pi/testdrie", shell=True)
+    a = re.sub('\D', '', output.decode('utf-8'))
+    print("aantal is nu: {}".format(a))
+    a = int(a)
+    if a > 0:
+        for i in range (a, 0, -1):
+            print (i)
+        #  i = i*10
+        print (i)
+        for step in range (0,48,8):
+            print(f"op het punt breathe aan te roepen en step is nu {step}")
+            asyncio.run(breathe(i,step))
+    else:
+        for step in range (0,48,8):
+            print(f"op het punt breathe aan te roepen en step is nu {step}")
+            asyncio.run(breathe(0,step))
+
+
+
+#for i in range(175, 255):
+#    print(f"range is nu {i}")
+#    for step in range (0,48,8):
+#        print(f"op het punt breathe aan te roepen en step is nu {step}")
+#        asyncio.run(breathe(255,step))
