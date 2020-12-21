@@ -433,7 +433,7 @@ async def breathe(intensity,step):
     await node3.stop()
 
 while True:
-    output = subprocess.check_output("cat /home/pi/testdrie", shell=True)
+    output = subprocess.check_output("cat /home/pi/drie", shell=True)
     a = re.sub('\D', '', output.decode('utf-8'))
     print("aantal is nu: {}".format(a))
     a = int(a)
