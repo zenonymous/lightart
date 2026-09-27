@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python: "3.8"      # what the Raspberry Pi ran in 2020
+            os: ubuntu-22.04
+          - python: "3.12"
+            os: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install tools
+        run: pip install pytest ruff
+      - name: Lint
+        run: ruff check . && ruff format --check lightart tests
+      - name: Byte-compile the 2020 scripts
+        run: python -m compileall -q artnet experiments gpio
+      - name: Tests
+        run: python -m pytest -q
+      - name: Simulator smoke test
+        run: python -m lightart simulate --seconds 5 -o simulation.html
