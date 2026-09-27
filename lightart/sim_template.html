@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+  :root {
+    --bg: #f4f4f2; --panel: #ffffff; --text: #1d1d1f; --muted: #6b6b70;
+    --border: #dcdcd8; --accent: #2f5bd3; --stage: #0b0c10;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121316; --panel: #1b1c20; --text: #ececef; --muted: #9a9aa3;
+      --border: #2c2d33; --accent: #7c9cff; --stage: #050507;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121316; --panel: #1b1c20; --text: #ececef; --muted: #9a9aa3;
+    --border: #2c2d33; --accent: #7c9cff; --stage: #050507;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 16px; color: var(--muted); }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+              background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+              padding: 10px 14px; margin-bottom: 16px; }
+  button { font: inherit; background: var(--accent); color: #fff; border: 0; border-radius: 6px;
+           padding: 6px 14px; cursor: pointer; min-width: 76px; }
+  label { color: var(--muted); display: inline-flex; gap: 6px; align-items: center; }
+  select { font: inherit; }
+  input[type=range] { flex: 1 1 200px; min-width: 140px; }
+  .readout { font-variant-numeric: tabular-nums; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .card h2 { font-size: 15px; margin: 0 0 2px; }
+  .card .meta { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .views { display: flex; gap: 8px; background: var(--stage); border-radius: 8px; padding: 8px; }
+  canvas { display: block; width: 100%; height: auto; }
+  .views > div { flex: 1; min-width: 0; }
+  .views .cap { color: #8b8b95; font-size: 11px; text-align: center; margin-top: 4px; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>LED pole simulator</h1>
+  <p class="sub">Six strips (a–f) × 48 fixtures × 2 pixels, recorded from <code>python -m lightart simulate</code>.</p>
+  <div class="controls">
+    <button id="play">Pause</button>
+    <input id="seek" type="range" min="0" value="0" aria-label="Time">
+    <span class="readout" id="time">0.0 s</span>
+    <label>Speed <select id="speed"><option>0.5</option><option selected>1</option><option>2</option><option>4</option></select></label>
+    <label><input id="rotate" type="checkbox" checked> Rotate pole</label>
+  </div>
+  <div class="grid" id="grid"></div>
+  <footer>Colours are shown before the cubic output correction that is applied on the wire, which is roughly how the eye saw them.
+    Unrolled view: fixture 1 at the bottom and strips a→f left to right. Pole view: the strips are spaced 60° apart.</footer>
+</main>
+<script>
+const DATA = __DATA__;
+const N = DATA.fixturesPerStrip, S = DATA.strips.length, PX = DATA.pixelsPerFixture;
+const ROWS = N * PX;
+const recs = DATA.recordings.map(r => {
+  const bin = atob(r.frames), bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return { ...r, bytes, count: r.visitors.length };
+});
+const total = Math.max(...recs.map(r => r.count));
+const LABELS = { breathe: "breathe: fixed show", legacy: "legacy: what ran in 2020", chase: "chase: wiring test" };
+
+const grid = document.getElementById("grid");
+const cards = recs.map(r => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `<h2>${LABELS[r.name] || r.name}</h2><div class="meta">visitors: <span class="v">0</span></div>
+    <div class="views"><div><canvas class="pole" width="200" height="480"></canvas><div class="cap">pole</div></div>
+    <div><canvas class="flat" width="200" height="480"></canvas><div class="cap">unrolled a–f</div></div></div>`;
+  grid.appendChild(card);
+  return { r, pole: card.querySelector(".pole"), flat: card.querySelector(".flat"), v: card.querySelector(".v") };
+});
+
+function color(r, frame, strip, n) {
+  const i = (frame * S * N + strip * N + (n - 1)) * 3;
+  return [r.bytes[i], r.bytes[i + 1], r.bytes[i + 2]];
+}
+function rgb(c, k = 1) { return `rgb(${c[0] * k | 0},${c[1] * k | 0},${c[2] * k | 0})`; }
+
+function drawFlat(cv, r, f) {
+  const ctx = cv.getContext("2d"), w = cv.width, h = cv.height;
+  ctx.clearRect(0, 0, w, h);
+  const colW = w / S, cell = h / ROWS;
+  for (let s = 0; s < S; s++) for (let row = 0; row < ROWS; row++) {
+    const n = Math.floor(row / PX) + 1;
+    ctx.fillStyle = rgb(color(r, f, s, n));
+    ctx.fillRect(s * colW + colW * 0.25, h - (row + 1) * cell + 0.5, colW * 0.5, cell - 1);
+  }
+}
+
+function drawPole(cv, r, f, angle) {
+  const ctx = cv.getContext("2d"), w = cv.width, h = cv.height;
+  ctx.clearRect(0, 0, w, h);
+  const cx = w / 2, R = w * 0.34, top = 12, cell = (h - 24) / ROWS;
+  ctx.fillStyle = "#1a1b22";
+  ctx.fillRect(cx - R * 0.82, top, R * 1.64, h - 24);
+  const order = [...Array(S).keys()].map(s => {
+    const a = angle + s * 2 * Math.PI / S;
+    return { s, x: cx + R * Math.sin(a), z: Math.cos(a) };
+  }).sort((p, q) => p.z - q.z);
+  ctx.globalCompositeOperation = "lighter";
+  for (const p of order) {
+    const k = 0.25 + 0.75 * (p.z + 1) / 2, size = 3 + 2 * (p.z + 1) / 2;
+    for (let row = 0; row < ROWS; row++) {
+      const c = color(r, f, p.s, Math.floor(row / PX) + 1);
+      if (c[0] + c[1] + c[2] === 0) continue;
+      const y = h - 12 - (row + 0.5) * cell;
+      ctx.fillStyle = rgb(c, k * 0.35);
+      ctx.beginPath(); ctx.arc(p.x, y, size * 1.9, 0, 7); ctx.fill();
+      ctx.fillStyle = rgb(c, k);
+      ctx.beginPath(); ctx.arc(p.x, y, size * 0.8, 0, 7); ctx.fill();
+    }
+  }
+  ctx.globalCompositeOperation = "source-over";
+}
+
+const seek = document.getElementById("seek"), timeEl = document.getElementById("time");
+const playBtn = document.getElementById("play"), speedEl = document.getElementById("speed");
+const rotateEl = document.getElementById("rotate");
+seek.max = total - 1;
+let pos = 0, playing = true, last = performance.now(), angle = 0;
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (reduced) rotateEl.checked = false;
+
+function render() {
+  const f = Math.floor(pos);
+  for (const c of cards) {
+    const fr = Math.min(f, c.r.count - 1);
+    drawPole(c.pole, c.r, fr, angle);
+    drawFlat(c.flat, c.r, fr);
+    c.v.textContent = c.r.visitors[fr];
+  }
+  seek.value = f;
+  timeEl.textContent = (f / DATA.fps).toFixed(1) + " s / " + (total / DATA.fps).toFixed(1) + " s";
+}
+function loop(now) {
+  const dt = (now - last) / 1000; last = now;
+  if (playing) {
+    pos += dt * DATA.fps * parseFloat(speedEl.value);
+    if (pos >= total) pos = 0;
+  }
+  if (rotateEl.checked) angle += dt * 0.35;
+  render();
+  requestAnimationFrame(loop);
+}
+playBtn.onclick = () => { playing = !playing; playBtn.textContent = playing ? "Pause" : "Play"; };
+seek.oninput = () => { pos = +seek.value; };
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Only for the 2020 original scripts in artnet/ and experiments/artnet/.
+# The lightart package itself needs nothing beyond the standard library (see pyproject.toml).
+#
+# The originals use the pyartnet 0.8 API (ArtNetNode(ip), add_universe,
+# add_channel(start=, width=), add_fade(list, ms)). pyartnet 1.x/2.x broke it.
+pyartnet>=0.8,<0.9
+
+# Only needed on the Raspberry Pi for gpio/:
+# RPi.GPIO
+# Only needed for experiments/ola/ (installed with the OLA daemon, not from PyPI):
+# ola

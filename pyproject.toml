@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lightart"
+version = "1.0.0"
+description = "Drive the lightart LED pole over Art-Net: breathe show, visitor counter, simulator."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []  # the show only needs the standard library
+
+[project.optional-dependencies]
+pi = ["RPi.GPIO"]
+dev = ["pytest>=7", "ruff>=0.5"]
+
+[project.scripts]
+lightart = "lightart.cli:main"
+
+[tool.setuptools]
+packages = ["lightart"]
+
+[tool.setuptools.package-data]
+lightart = ["sim_template.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+# The 2020 scripts are kept as-is on purpose (see AGENTS.md); CI only byte-compiles them.
+extend-exclude = ["artnet", "experiments", "gpio"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "RUF"]
+ignore = [
+    "UP006", "UP007", "UP035", "UP045",  # keep typing.List/Optional: the Pi ran Python 3.8
+    "RUF001", "RUF002", "RUF003",         # allow ×, →, – in text
+]
