@@ -1,0 +1,8 @@
+# The artnet/ scripts use the pyartnet 0.8 API (ArtNetNode(ip), add_universe,
+# add_channel(start=, width=), add_fade(list, ms)). pyartnet 1.x/2.x broke it.
+pyartnet>=0.8,<0.9
+
+# Only needed on the Raspberry Pi for gpio/:
+# RPi.GPIO
+# Only needed for ola_scripts/ (installed with the OLA daemon, not from PyPI):
+# ola
