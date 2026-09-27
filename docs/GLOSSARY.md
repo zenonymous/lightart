@@ -19,12 +19,12 @@
 | haal … weg | remove | "haal rood weg" = remove the red |
 | volgende / vorige | next / previous | step |
 | tijd om … | time to … | |
-| even tukken | take a quick nap | `syscall.py` sleep |
+| even tukken | take a quick nap | `experiments/artnet/syscall.py` sleep |
 | pleitte (pleite) | gone | slang |
 | morgen testen | test tomorrow | commit message |
 | meer debugging | more debugging | commit message |
 | dit stukje is om … aan te geven | this bit declares … | comment |
-| functie | function | `fade.py`, `test.py` |
+| functie | function | `experiments/artnet/fade.py`, `artnet/test.py` |
 
 ## Lighting and networking terms
 

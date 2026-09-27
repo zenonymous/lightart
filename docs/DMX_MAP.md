@@ -1,7 +1,9 @@
 # DMX / Art-Net map
 
 This is the layout used by `artnet/zbreathe.py`, `artnet/breathe.py` and
-`artnet/test.py`. They all use the same fixture definitions. (`funkyfade.py`
+`artnet/test.py`. They all use the same fixture definitions. `lightart/layout.py`
+generates it from the formulas below, and `tests/test_layout.py` checks that the
+result matches the original scripts. (`experiments/artnet/funkyfade.py`
 uses an older, different layout. See the end of this page.)
 
 ## Conventions
@@ -56,7 +58,8 @@ fixtures ((s + j + 8·k) mod 48) + 1   for j = 0 … 7
 At `s = 0`: a1–8, b9–16, c17–24, d25–32, e33–40, f41–48. On every next strip
 the band sits one block higher, so it winds once around the pole. Increasing
 `s` moves the whole spiral up by one block, and it wraps around at the top.
-`artnet/ac.py` is the scratch script that prints this mapping.
+`experiments/artnet/ac.py` is the scratch script that prints this mapping. In
+the package it is `lightart.layout.band(step)`.
 
 ## Older layout in `funkyfade.py`
 

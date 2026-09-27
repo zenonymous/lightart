@@ -2,56 +2,75 @@
 
 ## What this is
 
-Python scripts for a Dec-2020 light-art installation: an LED pole of 6
-strips driven over **Art-Net** from a Raspberry Pi. The production show is
-**`artnet/zbreathe.py`**, a blue "breathing" animation with a spiral band
-whose behaviour depends on a visitor count. The count comes from WiFi probe
-sniffing and is read from `/home/pi/drie`.
+Software for a light-art installation from Dec 2020: an LED pole of 6 strips
+driven over **Art-Net** from a Raspberry Pi. The show is a blue "breathing"
+animation with a red spiral band that reacts to a visitor count. The count is
+estimated from WiFi probe requests.
 
-**Status: archive.** The installation no longer runs and there is no
-hardware to test against. Treat the existing scripts as the historical record
-of what ran.
+The repo has two layers:
+
+| Layer | Where | Rules |
+|---|---|---|
+| **Current code** | `lightart/` (package), `tests/`, `deploy/` | Stdlib only, Python ≥ 3.8. Tested and linted. Make changes here. |
+| **2020 originals** | `artnet/`, `gpio/`, `show.sh`, `monitor.sh`, `experiments/` | The historical record. Do not edit unless the owner explicitly asks. CI only byte-compiles them. |
+
+The installation is not currently running and **there is no hardware** to
+test against. The owner calls the project an archive, but welcomes
+improvements in `lightart/`.
 
 ## Read first
 
-1. `README.md`: overview and data-flow diagram.
-2. `docs/SHOW_LOGIC.md`: what `zbreathe.py` really does (it differs from the intent).
+1. `README.md`: overview, commands, layout.
+2. `docs/SHOW_LOGIC.md`: the 2020 show compared with the fixed show.
 3. `docs/DMX_MAP.md`: universes, channel formulas, GRB order, spiral maths.
-4. `docs/KNOWN_ISSUES.md`: bugs you will otherwise rediscover.
-5. `docs/SCRIPTS.md` and `docs/GLOSSARY.md` (the comments are in Dutch).
+4. `docs/KNOWN_ISSUES.md`: the 2020 bugs and their status.
+5. `docs/ARCHITECTURE.md`, `deploy/README.md`, `docs/GLOSSARY.md` (Dutch).
+
+## Package map (`lightart/`)
+
+| Module | Responsibility |
+|---|---|
+| `layout.py` | Strips a–f × 48 fixtures (6 channels = 2 pixels each), `fixture_address()`, `band(step)`, `PIXEL_ORDER = "GRB"`. |
+| `engine.py` | `Pole` (per-fixture linear fades; a new fade replaces the running one, as in pyartnet 0.8), `Runner` (fixed fps, real-time or virtual clock, `wait()`, `hold()`, `limit_ms` → `StopShow`), `Output` interface. |
+| `artnet.py` | ArtDMX packets over UDP, the cubic output correction, the RGB→GRB wire mapping, a blackout on close. |
+| `shows.py` | `breathe` (fixed), `legacy` (a faithful port with the 2020 bugs), `chase` (wiring test), `BreatheConfig`. |
+| `visitors.py` | sniff-probes line parser, sliding-window counter, a `tail -F`-style follower, atomic `write_count`, tolerant `read_count`. |
+| `simulator.py` + `sim_template.html` | Records frames on a virtual clock into a self-contained HTML player. |
+| `power.py` | Relay on BCM 23 (HIGH = on). |
+| `cli.py` | `python -m lightart show / simulate / count-visitors / power`. |
 
 ## Key facts
 
-- **pyartnet 0.8.x only** (`requirements.txt`). Its API:
-  `ArtNetNode(ip).add_universe(n).add_channel(start=, width=)`,
-  `add_fade(list, ms)` (a new fade **replaces** the running one), and
-  `await wait_till_fade_complete()`. Do not "upgrade" to 1.x/2.x without
-  porting every script.
-- Controller at `2.0.0.2`, universes 0–3, and DMX channels are 1-based.
-- 288 fixtures `fixture{a..f}{1..48}`, each 6 channels = 2 GRB pixels. They
-  are module-level globals looked up by name with `globals()[...]`. The
-  identical 288-line block appears in `zbreathe.py`, `breathe.py` and
-  `test.py`.
-- Strips b and e are wired in reverse and cross a universe boundary at
-  fixture 11/12.
-- Hard-coded Pi paths: `/home/pi/drie`, `/home/pi/output.txt`,
-  `/home/pi/sniff-probes/`, `/usr/bin/python3.8`, interface `wlx001f1f08a329`,
-  GPIO BCM 23 (relay for the LED power supply).
-- The step that turned `output.txt` into `/home/pi/drie` is **not in the repo
-  and unknown**. Do not invent it and document it as if it existed.
-- The author's intent for the band: **brighter red with more visitors**.
-  Because of a bug it is always sent at intensity 1 (≈ off).
+- Controller at `2.0.0.2`, universes 0–3, DMX channels 1-based. Strips b and e
+  are wired in reverse and cross a universe boundary at fixture 11/12.
+  `tests/test_layout.py` checks the generated map against the 288 hand-written
+  lines in the 2020 scripts. Keep that test passing.
+- Colours in `lightart` are logical RGB. `artnet.py` applies the cubic
+  correction (`v³/255²`, so values below ~40 are effectively off) and the GRB
+  order. The simulator shows values before correction.
+- The show's visitor intent was confirmed by the owner: **a brighter red band
+  with more visitors**. Without visitors the band is dark and the breath is
+  fast (1.5 s), as in 2020.
+- The 2020 step that produced `/home/pi/drie` is lost. `count-visitors` is a
+  2026 replacement, not a reconstruction.
+- The GRB order and the "fixture 1 at the bottom" orientation are inferred
+  from the code, not confirmed on hardware.
+- The 2020 scripts need **pyartnet 0.8.x** (`requirements.txt`). The
+  `lightart` package does not use pyartnet.
 
 ## Working rules
 
-- There is no hardware, no tests and no CI. You cannot verify light output.
-  Syntax-check with `python3 -m py_compile artnet/*.py`. Do not run the
-  `artnet/` scripts expecting a result. `zbreathe.py` loops forever and needs
-  `/home/pi/drie`.
-- Keep the original scripts intact as the historical record. Put new or
-  refactored code in new files or modules, unless the owner explicitly asks
-  for in-place fixes.
-- `ola_scripts/` are GPL-2 third-party examples. Leave their headers alone.
-- Keep the docs in `docs/` in sync with any behaviour change, especially
-  `KNOWN_ISSUES.md` and `SHOW_LOGIC.md`.
-- The owner writes Dutch comments. English is fine for new docs and code.
+- Before finishing, run: `python3 -m pytest -q`, `ruff check .`,
+  `ruff format --check lightart tests`, and
+  `python3 -m compileall -q artnet experiments gpio`.
+- Stay compatible with Python 3.8: keep `from __future__ import annotations`
+  and `typing.List/Optional` in runtime positions. Do not use `match` or
+  3.9+ only APIs.
+- No runtime dependencies in `lightart` (RPi.GPIO is imported lazily in
+  `power.py`).
+- You can't see real LEDs. Use `python3 -m lightart simulate` and the tests
+  to check behaviour. Headless Chromium can screenshot the HTML.
+- `experiments/ola/` holds GPL-2 third-party examples. Leave their headers
+  alone.
+- When behaviour changes, update `docs/SHOW_LOGIC.md` and
+  `docs/KNOWN_ISSUES.md`.

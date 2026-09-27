@@ -57,10 +57,24 @@ draws (8 fixtures further up on each next strip) shows up as a **spiral**.
   - pyartnet ≥ 1.0 renamed and restructured all of this. Do not upgrade
     without porting the code.
 - **RPi.GPIO**: only used in `gpio/`.
-- **OLA** (`ola.ClientWrapper`): only used in `ola_scripts/`. It needs the
+- **OLA** (`ola.ClientWrapper`): only used in `experiments/ola/`. It needs the
   `olad` daemon and was abandoned in favour of pyartnet.
 
+## The 2026 rewrite
+
+The `lightart` package replaces the pieces above without changing the
+hardware. It keeps the same paths, IP and pin by default:
+
+- `lightart show` replaces `show.sh` + `zbreathe.py`. It uses its own
+  stdlib Art-Net sender (no pyartnet), sends 25 fps continuously (no gaps
+  between steps), survives a missing or empty `drie`, and blacks out on stop.
+- `lightart count-visitors` fills the gap between `output.txt` and `drie`.
+- `lightart power` replaces `gpio/`.
+- systemd units in `deploy/` start everything at boot and restart it on failure.
+
 ## Timeline (from the git history)
+
+The scratch files named here now live in `experiments/`.
 
 | Date | What happened |
 |---|---|
@@ -68,4 +82,5 @@ draws (8 fixtures further up on each next strip) shows up as a **spiral**.
 | 2020-12-12 | GPIO relay scripts. `for.py` and `ac.py` used to work out the fixture naming and the spiral mapping. `breathe.py`. |
 | 2020-12-15/16 | `zbreathe.py` created and "tested!" on the pole ("morgen testen op de ledpaal" = "test on the LED pole tomorrow"). `logic.py` used to debug the even/odd step logic. |
 | 2020-12-19/20 | `monitor.sh` (probe sniffing) and `syscall.py` (reading `/home/pi/drie`). The visitor count was wired into `zbreathe.py`. |
-| 2020-12-21 | `show.sh`, final tweaks. This is the last commit. |
+| 2020-12-21 | `show.sh`, final tweaks. This is the last 2020 commit. |
+| 2026-09 | Documentation, the `lightart` package rewrite, simulator, visitor counter, systemd units, tests and CI. The scratch scripts moved to `experiments/`. |

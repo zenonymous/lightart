@@ -1,6 +1,13 @@
-# Show logic: `artnet/zbreathe.py`
+# Show logic
 
-This page describes what the code **actually does**, which differs from what
+This page has two parts. Part 1 covers the 2020 original,
+`artnet/zbreathe.py` (ported faithfully as `--show legacy`). Part 2 covers
+the fixed show in `lightart/shows.py` (`--show breathe`, the default). To see
+both side by side, run `python3 -m lightart simulate`.
+
+# Part 1: the 2020 original (`artnet/zbreathe.py`)
+
+This part describes what the code **actually does**, which differs from what
 it was **meant to do** in a few places. Those places are marked ⚠ and listed
 in [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
@@ -69,3 +76,33 @@ scale the count up to a DMX brightness (it would need capping at 255).
 | visitors | ≈ 9 s | ≈ 27 s |
 
 `/home/pi/drie` is read again only at the start of each main-loop pass.
+
+# Part 2: the fixed show (`lightart.shows.breathe_cycle`)
+
+The look is the same: blue breathing, with a band that spirals up. What
+changed:
+
+| | 2020 original | fixed |
+|---|---|---|
+| Breaths per pass | 3 (odd steps do nothing) | 6, and the band moves one block per breath |
+| Band brightness | always 1 (≈ off) with visitors | 0 visitors → dark, 1 → 120, +15 per extra visitor, max 255 |
+| Breath half-length | 4.5 s with visitors, 1.5 s without | the same |
+| Count file read | once per pass | once per breath |
+| Missing or empty count file | crash | treated as 0, with a warning |
+| Frames | none between steps (nodes restart) | a steady 25 fps, blackout on stop |
+
+Each breath at `step` (0, 8, …, 40):
+
+1. **Inhale:** every fixture fades to blue `(0,0,255)` over `timer`, and
+   `band(step)` fades to red `(I,0,0)` over 1.5 s.
+2. **Exhale:** every fixture fades to soft blue `(0,0,30)` over `timer`,
+   `band(step)` fades to soft blue over 1.5 s, and `band(step+8)` fades to
+   red `(I,0,0)` over 1.5 s.
+
+`I` is set by `BreatheConfig.base` and `per_visitor`. The CLI flags are
+`--base` and `--per-visitor`. The values are before the cubic correction, so
+`I = 120` reaches the LEDs as about 26/255. That is dim but visible against
+the fully dark blue channel. If it is too subtle on the real pole, raise
+`--base`.
+
+One pass takes about 18 s with no visitors and about 54 s with visitors.
