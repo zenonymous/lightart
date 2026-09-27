@@ -1,0 +1,10 @@
+[Unit]
+Description=lightart: switch the LEDs on every evening
+
+[Timer]
+# Edit to taste; see `man systemd.time`. Persistent=true catches up after a reboot.
+OnCalendar=*-*-* 16:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

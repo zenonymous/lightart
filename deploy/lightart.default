@@ -1,0 +1,12 @@
+# Copy to /etc/default/lightart and edit. Read by the lightart systemd units.
+
+# Extra arguments for `python -m lightart show`, e.g. a different node or brighter band:
+#   LIGHTART_SHOW_ARGS=--host 2.0.0.2 --base 150 --per-visitor 20
+LIGHTART_SHOW_ARGS=
+
+# Extra arguments for `python -m lightart count-visitors`, e.g. only nearby phones:
+#   LIGHTART_COUNT_ARGS=--window 180 --min-rssi -70
+LIGHTART_COUNT_ARGS=
+
+# The sniffer interface can be overridden here as well:
+# IFACE=wlan1

@@ -1,0 +1,8 @@
+[Unit]
+Description=lightart: LED power supply OFF (relay on BCM 23)
+
+[Service]
+Type=oneshot
+User=pi
+WorkingDirectory=/home/pi/lightart
+ExecStart=/usr/bin/python3 -m lightart power off

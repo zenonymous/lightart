@@ -1,0 +1,14 @@
+[Unit]
+Description=lightart: count visitors from sniff-probes output into /home/pi/drie
+After=lightart-sniffer.service
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/lightart
+EnvironmentFile=-/etc/default/lightart
+ExecStart=/usr/bin/python3 -m lightart count-visitors $LIGHTART_COUNT_ARGS
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

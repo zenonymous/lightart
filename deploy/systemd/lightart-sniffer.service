@@ -1,0 +1,16 @@
+[Unit]
+Description=lightart: sniff WiFi probe requests (sniff-probes)
+After=network.target
+
+[Service]
+# tcpdump needs root. The interface must support monitor mode.
+User=root
+WorkingDirectory=/home/pi/sniff-probes
+EnvironmentFile=-/etc/default/lightart
+Environment=IFACE=wlx001f1f08a329 OUTPUT=/home/pi/output.txt CHANNEL_HOP=0
+ExecStart=/home/pi/sniff-probes/sniff-probes.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

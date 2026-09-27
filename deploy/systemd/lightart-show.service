@@ -1,0 +1,15 @@
+[Unit]
+Description=lightart: LED pole show (Art-Net to 2.0.0.2)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/lightart
+EnvironmentFile=-/etc/default/lightart
+ExecStart=/usr/bin/python3 -m lightart show $LIGHTART_SHOW_ARGS
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
